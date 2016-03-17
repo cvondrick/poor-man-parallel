@@ -1,6 +1,6 @@
 # poor-man-parallel
 
-This is a way of launching jobs on a cluster. It is very simple to use.
+This is a way of launching jobs on a cluster. It is very simple to use, and mostly meant for clusters that lack proper queueing systems. 
 
 ## Installation
 1. Install tmux
@@ -14,3 +14,4 @@ This is a way of launching jobs on a cluster. It is very simple to use.
 2. Run command: `crunch N machine1 machine2 machine3` where `N` is the number of replicas you want, and the rest are the hostnames of the machines you want to connect. This will cause tmux to open N*number_of_hosts panes, with SSH connections into each machine.
 3. Press `Ctrl+b y` to synchronize all the panes.
 4. Start typing, and your input will be broadcast to all machines.
+
