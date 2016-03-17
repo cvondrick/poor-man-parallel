@@ -1,6 +1,8 @@
 # poor-man-parallel
 
-This is a way of launching jobs on a cluster. It is very simple to use, and mostly meant for clusters that lack proper queueing systems. 
+This is a simple recipe for launching jobs on a cluster.
+
+It is mostly meant for clusters that lack proper queueing systems (such as the vision cluster at MIT). 
 
 ## Installation
 1. Install tmux
@@ -15,3 +17,26 @@ This is a way of launching jobs on a cluster. It is very simple to use, and most
 3. Press `Ctrl+b y` to synchronize all the panes.
 4. Start typing, and your input will be broadcast to all machines.
 
+## Best practices
+If you write your scripts in the right way, you can use the above workflow to process data in parallel. Below is a psuedo-code that shows the basic idea. It assumes you are using a networked file system (such as NFS).
+
+    workload = ["file1.json", "file2.json", ...]
+    
+    random.shuffle(workload) # in matlab, you must remember to set the random seed
+    
+    for workitem in workload:
+      in_path = "input/" + workitem
+      out_path = "output/" + workitem
+      lock_path = out_path + ".lock"
+      
+      if exist(out_path) or exist(lock_path):
+        continue
+      mkdir(lock_path) # create lock file
+      
+      # do heavy lifting here that eventually writes out_path
+      
+      rmdir(lock_path) # remove lock file
+
+## CSAIL instructions
+
+Remember, everytime you connect to a CSAIL machine, you must authenticate, otherwise your jobs will be killed eventually. To get around this, you can start your session with `longscreen`, and start tmux inside the longscreen. 
