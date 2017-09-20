@@ -1,4 +1,4 @@
-# poor-man-parallel
+# tmux-parallel
 
 This is a simple recipe for launching jobs on a cluster.
 
